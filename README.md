@@ -1,1 +1,1 @@
-# BusMall
+# Assets for BUSMALL Lab
