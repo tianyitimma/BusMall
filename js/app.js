@@ -3,7 +3,7 @@
 // Global varables
 const mainElem = document.getElementById('main');
 const roundElem = document.getElementById('round');
-const divElem = document.getElementById('div');
+//const divElem = document.getElementById('div');
 const leftImgElem = document.getElementById('leftImg');
 const leftNameElem = document.getElementById('leftName');
 const midImgElem = document.getElementById('midImg');
@@ -75,7 +75,7 @@ function productToShow(){
 
 // showing result button
 
-function resultButton() {
+function createResultButton() {
   const buttonElem = document.createElement('button');
   buttonElem.textContent = 'View Results';
   mainElem.appendChild(buttonElem);
@@ -99,13 +99,61 @@ function handleClick(event){
   if (roundCounter < round){
     productToShow();
   } else {
-    resultButton();
+    createResultButton();
     mainElem.removeEventListener('click', handleClick);
     mainElem.addEventListener('click', showResults);
+    
   }
 }
 
+// store results in local storage
+function storeResults() {
+  let resultsStringified = JSON.stringify(Product.allProducts);
+  localStorage.setItem('results', resultsStringified);
+}
+
+// access the previously stored local storage
+function checkResults(){
+  let checkData = localStorage.getItem('results');
+  if (checkData){
+    let storedResults = JSON.parse(checkData);
+    //renderResults(storedResults);
+    return storedResults;
+  }
+}
+
+// merge previous results and current results by adding up number of shows and clicked
+function mergeResults(){
+  let previousResults = checkResults();
+  if(previousResults){
+    for(let currentProduct of Product.allProducts){
+      for(let previousProduct of previousResults){
+        if(currentProduct.name === previousProduct.name){
+          currentProduct.shows += previousProduct.shows;
+          currentProduct.clicked += previousProduct.clicked;
+        }
+      }
+    }
+    localStorage.removeItem('results');
+  }
+
+}
+
+// function to render the previous results
+// function renderResults() {
+//   for(let product of Product.allProducts){
+//     if (product.clicked > 0){
+//       const pElem = document.createElement('p');
+//       pElem.textContent = `${product.name} had ${product.clicked} votes, and was seen ${product.shows} times.`;
+//       mainElem.appendChild(pElem);
+//     }
+//   }
+// }
+
+
+
 function showResults(event) {
+  mergeResults();
   let text = event.target.textContent;
   if(text === 'View Results'){
     for(let product of Product.allProducts){
@@ -115,11 +163,15 @@ function showResults(event) {
         mainElem.appendChild(pElem);
       }
     }
+
+  
+    mainElem.removeEventListener('click', showResults);
+    // const canvasElem = document.createElement('canvas');
+    // canvasElem.setAttribute
+    
+    storeResults();
+    addResultChart();
   }
-  mainElem.removeEventListener('click', showResults);
-  // const canvasElem = document.createElement('canvas');
-  // canvasElem.setAttribute
-  addResultChart();
 }
 
 // function to add a chart
