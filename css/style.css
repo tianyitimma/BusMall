@@ -2,18 +2,21 @@ body {
   width:960px;
 }
 
-main {
+main{
   display: flex;
   flex-direction: column;
+}
+#div {
+  display: flex;
   justify-content: space-between;
 }
-div{
+#left, #mid, #right{
   border: 3px solid black;
-  width: 60%;
+  width: 330px;
   
 }
 
-div image {
+img {
   border: 3px dashed blueviolet;
   width: 300px;
 }
