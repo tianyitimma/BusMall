@@ -88,13 +88,13 @@ function handleClick(event){
 
   if(id === 'left' || id === 'leftImg' || id === 'leftName'){
     leftProduct.clicked++;
-    alert('left product is selected');
+    // alert('left product is selected');
   } else if(id === 'mid' || id === 'midImg' || id === 'midName'){
     midProduct.clicked++;
-    alert('middle product is selected');
+    // alert('middle product is selected');
   } else if (id === 'right' || id === 'rightImg' || id === 'rightName'){
     rightProduct.clicked++;
-    alert('right product is selected');
+    // alert('right product is selected');
   }
   if (roundCounter < round){
     productToShow();
