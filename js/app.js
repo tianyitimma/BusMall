@@ -2,8 +2,8 @@
 
 // Global varables
 const mainElem = document.getElementById('main');
+const h2Elem = document.getElementById('h2');
 const roundElem = document.getElementById('round');
-//const divElem = document.getElementById('div');
 const leftImgElem = document.getElementById('leftImg');
 const leftNameElem = document.getElementById('leftName');
 const midImgElem = document.getElementById('midImg');
@@ -14,10 +14,14 @@ let leftProduct = null;
 let midProduct = null;
 let rightProduct = null;
 // set the number of rounds and counting rounds
-let round = 5;
+let round = 10;
 let roundCounter = 0;
 
+h2Elem.textContent = `Please select your favoriate product by clicking the image.You will see ${round} rounds of products.`;
+
+
 Product.allProducts = [];
+
 
 // object constructor function
 
@@ -85,24 +89,26 @@ function createResultButton() {
 
 function handleClick(event){
   let id = event.target.id;
-
-  if(id === 'left' || id === 'leftImg' || id === 'leftName'){
-    leftProduct.clicked++;
-    // alert('left product is selected');
-  } else if(id === 'mid' || id === 'midImg' || id === 'midName'){
-    midProduct.clicked++;
-    // alert('middle product is selected');
-  } else if (id === 'right' || id === 'rightImg' || id === 'rightName'){
-    rightProduct.clicked++;
-    // alert('right product is selected');
-  }
-  if (roundCounter < round){
-    productToShow();
-  } else {
-    createResultButton();
-    mainElem.removeEventListener('click', handleClick);
-    mainElem.addEventListener('click', showResults);
-    
+  if (id === 'leftImg' || id === 'midImg' || id === 'rightImg') {
+    if( id === 'leftImg' ){
+      leftProduct.clicked++;
+      // alert('left product is selected');
+    } else if(id === 'midImg' ){
+      midProduct.clicked++;
+      // alert('middle product is selected');
+    } else if (id === 'rightImg'){
+      rightProduct.clicked++;
+      // alert('right product is selected');
+    }
+    if (roundCounter < round){
+      productToShow();
+    } else {
+      createResultButton();
+      mainElem.removeEventListener('click', handleClick);
+      mainElem.addEventListener('click', showResults);
+    }
+  } else{
+    alert('Please click the prodcut image!');
   }
 }
 
@@ -139,19 +145,6 @@ function mergeResults(){
 
 }
 
-// function to render the previous results
-// function renderResults() {
-//   for(let product of Product.allProducts){
-//     if (product.clicked > 0){
-//       const pElem = document.createElement('p');
-//       pElem.textContent = `${product.name} had ${product.clicked} votes, and was seen ${product.shows} times.`;
-//       mainElem.appendChild(pElem);
-//     }
-//   }
-// }
-
-
-
 function showResults(event) {
   mergeResults();
   let text = event.target.textContent;
@@ -166,8 +159,6 @@ function showResults(event) {
 
   
     mainElem.removeEventListener('click', showResults);
-    // const canvasElem = document.createElement('canvas');
-    // canvasElem.setAttribute
     
     storeResults();
     addResultChart();
@@ -197,99 +188,30 @@ function addResultChart() {
         label: '# of Votes',
         data: productClicked,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
           'rgba(255, 99, 132, 0.2)'
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-          'rgba(255, 99, 132, 1)'
+          'rgba(255, 99, 132, 0.2)'
         ],
         borderWidth: 1
       }, {
         label: '# of Shown',
         data: productShown,
         backgroundColor: [
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)',
-          'rgba(54, 162, 235, 0.2)',
-          'rgba(255, 206, 86, 0.2)',
-          'rgba(75, 192, 192, 0.2)',
-          'rgba(153, 102, 255, 0.2)',
-          'rgba(255, 159, 64, 0.2)',
-          'rgba(255, 99, 132, 0.2)'
+          
+          'rgba(54, 162, 235, 0.2)'
         ],
         borderColor: [
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-          'rgba(255, 99, 132, 1)',
-          'rgba(54, 162, 235, 1)',
-          'rgba(255, 206, 86, 1)',
-          'rgba(75, 192, 192, 1)',
-          'rgba(153, 102, 255, 1)',
-          'rgba(255, 159, 64, 1)',
-          'rgba(255, 99, 132, 1)'
+          'rgba(54, 162, 235, 0.2)'
         ],
         borderWidth: 1
       }]
     },
     options: {
+      
       scales: {
         y: {
+          stepSize: 1,
           beginAtZero: true
         }
       }
